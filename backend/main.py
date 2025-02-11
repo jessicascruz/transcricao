@@ -2,11 +2,12 @@ from fastapi import FastAPI, HTTPException, Depends
 from typing import Optional, List, Dict
 from pydantic import BaseModel
 from uuid import UUID, uuid4
-from fastapi.middleware.cors import CORSMiddleware # import here
+from fastapi.middleware.cors import CORSMiddleware
+from datetime import date
 
 app = FastAPI()
 
-# declare origin/s
+# declare origin/s -> http://127.0.0.1:8000
 origins = [
     "http://localhost:5173",
     "localhost:5173"
@@ -20,7 +21,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+d = [
+    {"User": "a", "date": date.today(), "count": 1},
+    {"User": "b", "date": date.today(), "count": 2},
+]
 
-@app.get("/")
+@app.get("/teste")
 async def root():
-    return {"message": "Hello World"}
+    return d
